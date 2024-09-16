@@ -15,3 +15,5 @@ const user_student_schema = new mongoose.Schema({
 })
 
 
+module.exports = mongoose.model('user_student', user_student_schema);
+
