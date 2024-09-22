@@ -8,10 +8,10 @@ const {
     deletestudent
 } = require('../controllers/controller_student');
 
-router.post('/create_customer', createUserStudent);
-router.get('/all_customers', getAllStudents);
-router.get('/get_customer/:id', getstudentById);
-router.patch('/update_customer/:id', updatestudent);
-router.delete('/delete_customer/:id', deletestudent);
+router.post('/create_student', createUserStudent);
+router.get('/all_students', getAllStudents);
+router.get('/get_student/:id', getstudentById);
+router.patch('/update_student/:id', updatestudent);
+router.delete('/delete_student/:id', deletestudent);
 
 module.exports = router;

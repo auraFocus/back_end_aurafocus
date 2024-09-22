@@ -1,5 +1,5 @@
 const Student = require('../models/user_student');
-const {testCPF} = require('../utils/validators');
+const {testCPF} = require('../utils/validator_cpf');
 const errorMessages = require('../error_messages/error_messages');
 
 async function createUserStudent(req, res) {

@@ -5,11 +5,19 @@ require('dotenv').config();
 const server = express();
 const porta_server = process.env.PORT;
 const students_routes = require('./routers/router_student');
+const parents_routes = require('./routers/router_parents');
+const user_b2b_admin_routes = require('./routers/router_b2b_admin');
+const schools_routes = require('./routers/router_school');
 
 mongoose.connect(process.env.MONGO_URI,{useNewUrlParser:true,useUnifiedTopology: true });
 
 server.use(bodyParser.json());
-server.use('/aura/students');
+console.log("rotas montadas : /aura/students");
+
+server.use('/aura/students', students_routes);
+server.use('/aura/parents',parents_routes);
+server.use('/aura/b2b_admin',user_b2b_admin_routes);
+server.use('/aura/schools',schools_routes);
 
 
 
