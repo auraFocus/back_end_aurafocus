@@ -1,16 +1,27 @@
 const Student = require('../models/user_student');
 const {testCPF} = require('../utils/validator_cpf');
-const errorMessages = require('../error_messages/error_messages');
+const Messages = require('../error_messages/messages');
+const bcrypt = require('bcrypt');
+
+
+
 
 async function createUserStudent(req, res) {
     try {
-        const {cpf} = req.body;
+        const {cpf,password} = req.body;
+
         if(!testCPF(cpf)){
             return res.status(400).json({error:errorMessages.NOT_VALID_CPF});
         }
-        const student = new Student(req.body);
+        const hashPassword = await bcrypt.hash(req.body.password, 10);
+
+        const student = new Student({
+            ...req.body,
+            password:hashPassword
+        });
+
         await student.save();
-        res.status(201).send(student);
+        res.status(201).send({message: Messages.CREATED_USER , student});
 
     } catch (error) {
         console.log(error);

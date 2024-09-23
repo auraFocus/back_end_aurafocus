@@ -1,5 +1,5 @@
 const School = require('../models/school');
-const errorMessages = require('../error_messages/error_messages');
+const errorMessages = require('../error_messages/messages');
 
 async function createSchool(req, res) {
     try {

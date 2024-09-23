@@ -1,16 +1,26 @@
 const Userb2bAdmin = require('../models/user_b2b_admin');
 const {testCPF} = require('../utils/validator_cpf');
-const errorMessages = require('../error_messages/error_messages');
+const Messages = require('../error_messages/messages');
+const bcrypt = require('bcrypt');
+const user_b2b_admin = require('../models/user_b2b_admin');
+
 
 async function createB2Badminuser(req, res) {
     try {
-        const {cpf} = req.body;
+        const {cpf,password} = req.body;
+
         if(!testCPF(cpf)){
             return res.status(400).json({error:errorMessages.NOT_VALID_CPF});
         }
-        const user_b2b_admin = new Userb2bAdmin(req.body);
+        const hashPassword = await bcrypt.hash(req.body.password, 10);
+
+        const user_b2b_admin = new Userb2bAdmin({
+            ...req.body,
+            password:hashPassword
+        });
+
         await user_b2b_admin.save();
-        res.status(201).send(user_b2b_admin);
+        res.status(201).send({message: Messages.CREATED_USER , user_b2b_admin});
 
     } catch (error) {
         console.log(error);
@@ -18,6 +28,8 @@ async function createB2Badminuser(req, res) {
         
     }
 }
+
+
 
 async function getAllB2Badmin(req, res) {
     try {
@@ -32,7 +44,7 @@ async function getuserb2bAdminById(req, res) {
     try {
         const user_b2b_admin = await Userb2bAdmin.findOne({ id: req.params.id }).select('-id');
         if (!user_b2b_admin){
-            return res.status(404).json({error:errorMessages.NOT_FOUND_USER});
+            return res.status(404).json({error:Messages.NOT_FOUND_USER});
         }
         res.status(200).send(user_b2b_admin);
     } catch (error) {

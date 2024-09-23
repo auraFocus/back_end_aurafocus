@@ -1,19 +1,32 @@
 const Teacher = require('../models/user_teacher');
 const {testCPF} = require('../utils/validator_cpf');
-const errorMessages = require('../error_messages/error_messages');
+const Messages = require('../error_messages/messages');
+const bcrypt = require('bcrypt');
+
+
+
 
 async function createUserTeacher(req, res) {
     try {
-        const {cpf} = req.body;
-        if (!testCPF(cpf)) {
-            return res.status(400).json({error: errorMessages.NOT_VALID_CPF});
+        const {cpf,password} = req.body;
+
+        if(!testCPF(cpf)){
+            return res.status(400).json({error:Messages.NOT_VALID_CPF});
         }
-        const teacher = new Teacher(req.body);
+        const hashPassword = await bcrypt.hash(req.body.password, 10);
+
+        const teacher = new Teacher({
+            ...req.body,
+            password:hashPassword
+        });
+
         await teacher.save();
-        res.status(201).send(teacher);
+        res.status(201).send({message: Messages.CREATED_USER , teacher});
+
     } catch (error) {
         console.log(error);
         res.status(400).send(error);
+        
     }
 }
 
@@ -30,7 +43,7 @@ async function getTeacherById(req, res) {
     try {
         const teacher = await Teacher.findOne({ id: req.params.id }).select('-id');
         if (!teacher) {
-            return res.status(404).json({error: errorMessages.NOT_FOUND_USER});
+            return res.status(404).json({error: Messages.NOT_FOUND_USER});
         }
         res.status(200).send(teacher);
     } catch (error) {

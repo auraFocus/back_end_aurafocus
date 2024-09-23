@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {
+    login,
     createB2Badminuser,
     getAllB2Badmin,
     getuserb2bAdminById,

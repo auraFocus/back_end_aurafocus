@@ -13,4 +13,3 @@ const School = new mongoose.Schema({
 
 
 module.exports = mongoose.model('School', School);
-

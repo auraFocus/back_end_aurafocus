@@ -1,17 +1,24 @@
 const Parent = require('../models/user_parent');
 const {testCPF} = require('../utils/validator_cpf');
-const errorMessages = require('../error_messages/error_messages');
-
+const Messages = require('../error_messages/messages');
+const bcrypt = require('bcrypt');
 async function createUserparent(req, res) {
     try {
-        const {cpf} = req.body;
+        const {cpf,password} = req.body;
         if(!testCPF(cpf)){
             return res.status(400).json({error:errorMessages.NOT_VALID_CPF});
         }
-        const parent = new Parent(req.body);
-        await parent.save();
-        res.status(201).send(parent);
 
+        const hashPassword = await bcrypt.hash(req.body.password, 10);
+
+        const user_parent = new Parent({
+            ...req.body,
+            password:hashPassword
+        });
+
+        await user_parent.save();
+        res.status(201).send({message: Messages.CREATED_USER , user_parent});
+      
     } catch (error) {
         console.log(error);
         res.status(400).send(error);

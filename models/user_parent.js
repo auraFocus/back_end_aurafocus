@@ -6,6 +6,8 @@ const user_parent_schema = new mongoose.Schema({
     
     id:{type:String, default: uuidv4 , unique : true},
     name:{type:String, required:true},
+    username:{type:String, required:true},
+    password:{type:String, required:true},
     cpf:{type:String, required:true, length:11},
     address: {
         street: { type: String, required: true },
