@@ -18,18 +18,19 @@ async function createSchool(req, res) {
 
 async function getallschools(req, res) {
     try {
-        const schools = await School.find().select('-id');
+        
+        const schools = await School.find();
         res.status(200).send(schools);
     } catch (error) {
         console.log(error);
-        
         res.status(500).send(error);
     }
 }
 
+
 async function getschoolbyID(req, res) {
     try {
-        const school = await Parent.findOne({ id: req.params.id }).select('-id');
+        const school = await Parent.findOne({ id: req.params.id }).select('id');
         if (!school){
             return res.status(404).json({error:errorMessages.NOT_FOUND_USER});
         }
