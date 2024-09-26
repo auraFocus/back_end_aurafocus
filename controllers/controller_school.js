@@ -18,9 +18,11 @@ async function createSchool(req, res) {
 
 async function getallschools(req, res) {
     try {
-        const schools = await Parent.find().select('-id');
+        const schools = await School.find().select('-id');
         res.status(200).send(schools);
     } catch (error) {
+        console.log(error);
+        
         res.status(500).send(error);
     }
 }
