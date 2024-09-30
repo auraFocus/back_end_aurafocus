@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
-const Messages = require('../error_messages/messages');
 const jwt = require('jsonwebtoken');
+const Messages = require('../error_messages/messages');
+
 const Userb2bAdmin = require('../models/user_b2b_admin');
 const Parent = require('../models/user_parent');
 const Student = require('../models/user_student');
@@ -23,30 +24,37 @@ async function findUserByUsername(username) {
     return null; 
 }
 
+
 async function login(req, res) {
     const { username, password } = req.body;
 
     try {
-        
+       
         const result = await findUserByUsername(username);
         if (!result) {
             return res.status(404).send(Messages.NOT_FOUND_USER);
         }
 
-        const { user, role } = result; 
-        
+        const { user, role } = result;
         
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
             return res.status(401).send(Messages.INVALID_PASSWORD);
         }
 
+        const payload = {
+            id:user.id,
+            role:role,
+            school_id:user.school_id,
+        }
+     
         const token = jwt.sign(
-            {id:user.id, role},
+            payload,
             process.env.JWT_SECRET,
-            {expiresIn: '180m'}
-        )
-    
+            { expiresIn: '60m' } 
+        );
+
+        
         res.status(200).send({ message: Messages.SUCESSFUL_LOGIN, token });
 
     } catch (error) {
