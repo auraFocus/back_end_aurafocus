@@ -32,7 +32,7 @@ async function createUserStudent(req, res) {
 
 async function getAllStudents(req, res) {
     try {
-        const student = await Student.find().select('-id');
+        const students = await Student.find().select('-id');
         res.status(200).send(students);
     } catch (error) {
         res.status(500).send(error);

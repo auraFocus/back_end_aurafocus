@@ -21,7 +21,7 @@ console.log("rotas montadas : /aura/students");
 
 server.use('/aura/students', authenticateToken ,students_routes);
 server.use('/aura/parents',authenticateToken ,parents_routes);
-server.use('/aura/b2b_admin',authenticateToken ,user_b2b_admin_routes);
+server.use('/aura/b2b_admin',user_b2b_admin_routes);
 server.use('/aura/schools',authenticateToken,schools_routes);
 server.use('/aura/auth',auth);
 server.use('/aura/teachers', authenticateToken ,teachers_routes);

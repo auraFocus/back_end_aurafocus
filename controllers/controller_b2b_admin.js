@@ -7,34 +7,11 @@ const user_b2b_admin = require('../models/user_b2b_admin');
 
 async function createB2Badminuser(req, res) {
     try {
-        const {cpf,password,school_id} = req.body;
-
+        const {cpf,password} = req.body;
 
         if(!testCPF(cpf)){
             return res.status(400).json({error:errorMessages.NOT_VALID_CPF});
         }
-
-        const existingUser = await Userb2bAdmin.findOne({cpf});
-
-   
-        
-      
-        
-        if(school_id){
-                return res.status(400).json({error:Messages.ALREADY_HAVE_SCHOOL});
-        }
-
-        if (existingUser) {
-            
-            if (existingUser.school) {
-                
-                
-                return res.status(400).json({ error: "Usuário já está cadastrado com uma escola." });
-            } else {
-                return res.status(400).json({ error: "Usuário já existe, mas não está associado a nenhuma escola." });
-            }
-        }
-
         const hashPassword = await bcrypt.hash(req.body.password, 10);
 
         const user_b2b_admin = new Userb2bAdmin({
@@ -46,7 +23,7 @@ async function createB2Badminuser(req, res) {
         res.status(201).send({message: Messages.CREATED_USER , user_b2b_admin});
 
     } catch (error) {
-       
+        console.log(error);
         res.status(400).send(error);
         
     }
