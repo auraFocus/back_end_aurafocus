@@ -33,7 +33,7 @@ async function createB2Badminuser(req, res) {
 
 async function getAllB2Badmin(req, res) {
     try {
-        const user_b2b_admin = await Userb2bAdmin.find().select('-id');
+        const user_b2b_admin = await Userb2bAdmin.find().select('_id id name cpf address phone role school_id');
         res.status(200).send(user_b2b_admin);
     } catch (error) {
         res.status(500).send(error);

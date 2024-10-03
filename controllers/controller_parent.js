@@ -28,7 +28,7 @@ async function createUserparent(req, res) {
 
 async function getAllparents(req, res) {
     try {
-        const parents = await Parent.find().select('-id');
+        const parents = await Parent.find().select('_id id name cpf address phone role school_id');
         res.status(200).send(parents);
     } catch (error) {
         res.status(500).send(error);
