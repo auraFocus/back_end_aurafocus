@@ -13,7 +13,7 @@ const user_student_schema = new mongoose.Schema({
         number: { type: Number, required: true }
     },
     phone:{type:String,required:true},
-    parent_id:{type:mongoose.Schema.Types.UUID, ref:"Parent", required:true},
+    parent_id:{type: String, ref: "Parent", required: true },
     role:{
         type:String,
         required:true,
