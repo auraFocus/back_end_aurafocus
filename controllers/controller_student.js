@@ -32,13 +32,14 @@ async function createUserStudent(req, res) {
 
 async function getAllStudents(req, res) {
     try {
-        const { name, cpf, email } = req.query; // Extrair parâmetros de busca da query
+        const { id,name, cpf, email } = req.query; 
 
        
         let filter = {};
-        if (name) filter.name = new RegExp(name, 'i'); // 'i' para case insensitive
+        if (id) filter.id = new RegExp(id, 'i');
+        if (name) filter.name = new RegExp(name, 'i');
         if (cpf) filter.cpf = cpf;
-        if (email) filter.username = new RegExp(email, 'i'); // Usando 'username' para email
+        if (email) filter.username = new RegExp(email, 'i'); 
 
         const students = await Student.find(filter).select('-_id id name cpf username address phone parent_id role school_id');
         
