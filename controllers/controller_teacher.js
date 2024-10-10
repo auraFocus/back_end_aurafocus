@@ -32,9 +32,20 @@ async function createUserTeacher(req, res) {
 
 async function getAllTeachers(req, res) {
     try {
-        const teachers = await Teacher.find().select('_id id name cpf address phone role school_id');
+        const {id, name , cpf, email} = req.query;
+    
+        let filter = {};
+        if (id) filter.id = new RegExp(id, 'i');
+        if (name) filter.name = new RegExp(name, 'i');
+        if (cpf) filter.cpf = cpf;
+        if (email) filter.username = new RegExp(email, 'i'); 
+
+
+        const teachers = await Teacher.find(filter).select('_id id name cpf address phone role school_id');
         res.status(200).send(teachers);
     } catch (error) {
+        console.log(error);
+        
         res.status(500).send(error);
     }
 }

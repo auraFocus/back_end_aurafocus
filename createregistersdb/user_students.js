@@ -20,7 +20,7 @@ const generateRandomPhone = () => {
 };
 
 const createStudent = async (index) => {
-  const hashedPassword = await bcrypt.hash('defaultPassword123', 10); // Use uma senha padrão e criptografe
+  const hashedPassword = await bcrypt.hash('defaultPassword123', 10); 
   
   return {
     id: uuidv4(),
@@ -33,9 +33,9 @@ const createStudent = async (index) => {
       number: Math.floor(Math.random() * 500)
     },
     phone: generateRandomPhone(),
-    parent_id: uuidv4(), // ou use um ID de parent existente
+    parent_id: uuidv4(), 
     role: 'USER_STUDENDT',
-    school_id: uuidv4(), // ou use um ID de school existente
+    school_id: uuidv4(), 
   };
 };
 
