@@ -28,7 +28,16 @@ async function createUserparent(req, res) {
 
 async function getAllparents(req, res) {
     try {
-        const parents = await Parent.find().select('_id id name cpf address phone role school_id');
+        const { id,name, cpf, email } = req.query; 
+
+       
+        let filter = {};
+        if (id) filter.id = new RegExp(id, 'i');
+        if (name) filter.name = new RegExp(name, 'i');
+        if (cpf) filter.cpf = cpf;
+        if (email) filter.username = new RegExp(email, 'i'); 
+
+        const parents = await Parent.find(filter).select('_id id name cpf address phone role school_id');
         res.status(200).send(parents);
     } catch (error) {
         res.status(500).send(error);

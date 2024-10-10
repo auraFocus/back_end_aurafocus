@@ -33,7 +33,16 @@ async function createB2Badminuser(req, res) {
 
 async function getAllB2Badmin(req, res) {
     try {
-        const user_b2b_admin = await Userb2bAdmin.find().select('_id id name cpf address phone role school_id');
+        const { id,name, cpf, email } = req.query; 
+
+       
+        let filter = {};
+        if (id) filter.id = new RegExp(id, 'i');
+        if (name) filter.name = new RegExp(name, 'i');
+        if (cpf) filter.cpf = cpf;
+        if (email) filter.username = new RegExp(email, 'i'); 
+        
+        const user_b2b_admin = await Userb2bAdmin.find(filter).select('_id id name cpf address phone role school_id');
         res.status(200).send(user_b2b_admin);
     } catch (error) {
         res.status(500).send(error);
