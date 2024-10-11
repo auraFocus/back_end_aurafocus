@@ -11,11 +11,14 @@ const schools_routes = require('./routers/router_school');
 const auth = require('./routers/router_auth');
 const teachers_routes = require('./routers/router_teacher');
 const authenticateToken = require('./middleware/middleare_auth');
-
+const cors = require('cors');
 
 
 mongoose.connect(process.env.MONGO_URI,{useNewUrlParser:true,useUnifiedTopology: true });
 
+
+
+server.use(cors());
 server.use(bodyParser.json());
 console.log("rotas montadas : /aura/students");
 
