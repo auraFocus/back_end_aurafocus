@@ -18,10 +18,11 @@ mongoose.connect(process.env.MONGO_URI,{useNewUrlParser:true,useUnifiedTopology:
 
 
 
-server.use(cors());
-server.use(bodyParser.json());
-console.log("rotas montadas : /aura/students");
 
+server.use(bodyParser.json());
+
+console.log("rotas montadas : /aura/students");
+server.use(cors());
 server.use('/aura/students', authenticateToken ,students_routes);
 server.use('/aura/parents',authenticateToken ,parents_routes);
 server.use('/aura/b2b_admin',user_b2b_admin_routes);

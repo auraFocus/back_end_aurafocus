@@ -46,6 +46,7 @@ async function login(req, res) {
             id:user.id,
             role:role,
             school_id:user.school_id,
+            name:user.name
         }
      
         const token = jwt.sign(
