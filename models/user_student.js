@@ -20,6 +20,7 @@ const user_student_schema = new mongoose.Schema({
         enum:['USER_STUDENDT','USER_B2B_ADMIN','USER_PARENT','USER_PLATFORM_N1','USER_PLATFORM_N2','USER_PLATFORM_ADMIN'],
         default:'USER_STUDENT'
     },
+    hyperfocus:{type:String},
     school_id: { type: String, ref: "School", required: true } 
 })
 
