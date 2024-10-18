@@ -11,6 +11,7 @@ const schools_routes = require('./routers/router_school');
 const auth = require('./routers/router_auth');
 const teachers_routes = require('./routers/router_teacher');
 const authenticateToken = require('./middleware/middleare_auth');
+const chatRoutes = require('./routers/router_chat');
 const cors = require('cors');
 
 
@@ -23,6 +24,7 @@ server.use(bodyParser.json());
 
 console.log("rotas montadas : /aura/students");
 server.use(cors());
+server.use('/aura/chat', authenticateToken ,chatRoutes);
 server.use('/aura/students', authenticateToken ,students_routes);
 server.use('/aura/parents',authenticateToken ,parents_routes);
 server.use('/aura/b2b_admin',user_b2b_admin_routes);

@@ -18,7 +18,7 @@ async function createB2Badminuser(req, res) {
             ...req.body,
             password:hashPassword
         });
-
+        
         await user_b2b_admin.save();
         res.status(201).send({message: Messages.CREATED_USER , user_b2b_admin});
 
